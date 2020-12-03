@@ -1,21 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {  StyleSheet, Text, View,Image,ScrollView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppLoading } from 'expo';
+import { useFonts } from 'expo-font'
+import AuthContext from "./context"
+
+import Startnav from './MainNavigation';
+
 
 export default function App() {
+  let [citydata,setCity]=useState(["Bengaluru"])
+  const [fontsLoaded] = useFonts({
+    'montserrat':  require('./Montserrat-Regular.ttf'),})
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <AuthContext.Provider value={{citydata,setCity}}>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    <NavigationContainer>
+
+  <Startnav/>
+    </NavigationContainer>
+    </AuthContext.Provider>
+    );}}
